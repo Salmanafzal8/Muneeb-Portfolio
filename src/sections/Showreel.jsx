@@ -1,9 +1,17 @@
 import { useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { Play, Pause, Volume2, VolumeX } from "lucide-react";
+import { Play, Pause, Volume2, VolumeX, MapPin } from "lucide-react";
 import SectionHeading from "../components/ui/SectionHeading";
 import Reveal from "../components/ui/Reveal";
+import { staggerContainer, fadeUp } from "../animations/variants";
 import { cn } from "../utils/cn";
+
+const GALLERY = [
+  { src: "/gallery/cabins.jpg", title: "Autumn in the woods", place: "Harz, Germany", span: "md:row-span-2" },
+  { src: "/gallery/oktoberfest.jpg", title: "Through the heart", place: "Oktoberfest, Munich", span: "" },
+  { src: "/gallery/sunset.jpg", title: "Golden hour", place: "Bavaria", span: "" },
+  { src: "/gallery/paris.jpg", title: "City of light", place: "Paris, France", span: "md:row-span-2" },
+];
 
 export default function Showreel() {
   const videoRef = useRef(null);
@@ -128,6 +136,48 @@ export default function Showreel() {
           </motion.button>
         )}
       </Reveal>
+
+      {/* Photo gallery — through my lens */}
+      <Reveal as="div" className="mt-20 flex items-center gap-3">
+        <span className="h-px w-8 bg-[var(--color-accent)]" />
+        <span className="text-xs font-medium uppercase tracking-[0.25em] text-[var(--color-accent)]">
+          Through my lens
+        </span>
+      </Reveal>
+
+      <motion.div
+        variants={staggerContainer}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.15 }}
+        className="mt-6 grid auto-rows-[200px] grid-cols-2 gap-4 md:grid-cols-4 md:auto-rows-[230px]"
+      >
+        {GALLERY.map((photo) => (
+          <motion.figure
+            key={photo.src}
+            variants={fadeUp}
+            className={cn(
+              "group relative overflow-hidden rounded-2xl border border-line bg-[var(--card)]",
+              photo.span
+            )}
+          >
+            <img
+              src={photo.src}
+              alt={photo.title}
+              loading="lazy"
+              decoding="async"
+              className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+            <figcaption className="absolute bottom-0 left-0 right-0 translate-y-2 p-4 text-white opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
+              <p className="font-display text-sm font-semibold">{photo.title}</p>
+              <p className="flex items-center gap-1 text-xs text-white/70">
+                <MapPin size={11} /> {photo.place}
+              </p>
+            </figcaption>
+          </motion.figure>
+        ))}
+      </motion.div>
     </section>
   );
 }
