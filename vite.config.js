@@ -3,7 +3,7 @@ import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
-  base: "/Muneeb-Portfolio/",
+  base: process.env.GITHUB_PAGES ? "/Muneeb-Portfolio/" : "/",
   plugins: [react(), tailwindcss()],
   build: {
     target: "esnext",
