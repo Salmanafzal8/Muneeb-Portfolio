@@ -1,0 +1,60 @@
+export const EXPERIENCE = [
+  {
+    id: "sicherheit-nord",
+    role: "Working Student",
+    company: "Sicherheit Nord GmbH & Co. KG",
+    location: "Germany",
+    period: "2023 — Present",
+    current: true,
+    summary:
+      "Running front-desk operations end to end — from guest experience to closing the books each night.",
+    points: [
+      "Managing front desk operations",
+      "Customer service",
+      "End-of-day financial reporting",
+      "Microsoft Excel reporting",
+      "Opera software",
+      "Protel software",
+      "Daily operational management",
+    ],
+  },
+  {
+    id: "roche",
+    role: "Working Student · Business & IT",
+    company: "Roche Diagnostics GmbH",
+    location: "Penzberg, Germany",
+    period: "Aug 2025 — Oct 2025",
+    current: false,
+    summary:
+      "Built operational readiness across teams and kept compliance airtight in a fast-moving IT environment.",
+    points: [
+      "Building operational readiness",
+      "Coordinating multiple teams",
+      "ServiceNow workflow management",
+      "DSMT imaging",
+      "Device registration",
+      "Compliance documentation",
+      "Inventory management",
+      "Business IT support",
+    ],
+  },
+  {
+    id: "amigos-bpo",
+    role: "Working Student · HR Assistant",
+    company: "AMIGOS BPO",
+    location: "Pakistan",
+    period: "Feb 2021 — Feb 2022",
+    current: false,
+    summary:
+      "Owned the recruiting pipeline from first CV to onboarding — finding and welcoming the right people.",
+    points: [
+      "CV screening",
+      "Interview scheduling",
+      "Internship recruitment",
+      "Employee onboarding",
+      "HR documentation",
+      "Recruitment planning",
+      "Employee records",
+    ],
+  },
+];

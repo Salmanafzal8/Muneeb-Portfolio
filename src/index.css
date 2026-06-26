@@ -1,0 +1,239 @@
+@import "tailwindcss";
+
+/* ----------------------------------------------------------------------------
+   Dark mode driven by a class on <html> (we default to .dark)
+---------------------------------------------------------------------------- */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ----------------------------------------------------------------------------
+   Design tokens
+---------------------------------------------------------------------------- */
+@theme {
+  --font-display: "Clash Display", "Satoshi", "General Sans", ui-sans-serif,
+    system-ui, sans-serif;
+  --font-sans: "Inter", "Satoshi", ui-sans-serif, system-ui, sans-serif;
+
+  --color-ink: #09090b;
+  --color-ink-soft: #111114;
+  --color-paper: #ffffff;
+
+  --color-accent: #4f7cff;
+  --color-accent-2: #9b6bff;
+  --color-accent-3: #2dd4ff;
+
+  --color-brand-50: #eef2ff;
+  --color-brand-100: #e0e7ff;
+  --color-brand-400: #7c97ff;
+  --color-brand-500: #4f7cff;
+  --color-brand-600: #3f63e6;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-quint: cubic-bezier(0.83, 0, 0.17, 1);
+
+  --shadow-glow: 0 0 80px -20px rgba(79, 124, 255, 0.45);
+  --shadow-card: 0 24px 60px -24px rgba(0, 0, 0, 0.35);
+}
+
+/* ----------------------------------------------------------------------------
+   Semantic surface colors that flip with the theme
+---------------------------------------------------------------------------- */
+:root {
+  --bg: #ffffff;
+  --bg-elevated: #f7f7f8;
+  --fg: #09090b;
+  --fg-muted: #52525b;
+  --line: rgba(9, 9, 11, 0.1);
+  --card: rgba(9, 9, 11, 0.02);
+  --glass: rgba(255, 255, 255, 0.65);
+  color-scheme: light;
+}
+
+.dark {
+  --bg: #09090b;
+  --bg-elevated: #111114;
+  --fg: #fafafa;
+  --fg-muted: #a1a1aa;
+  --line: rgba(255, 255, 255, 0.1);
+  --card: rgba(255, 255, 255, 0.03);
+  --glass: rgba(12, 12, 14, 0.55);
+  color-scheme: dark;
+}
+
+/* ----------------------------------------------------------------------------
+   Base
+---------------------------------------------------------------------------- */
+@layer base {
+  * {
+    border-color: var(--line);
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
+  }
+
+  /* Lenis manages scroll; disable native smooth when JS is active */
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+  .lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+  }
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
+
+  body {
+    margin: 0;
+    background-color: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-sans);
+    font-feature-settings: "ss01", "cv01", "cv03";
+    overflow-x: hidden;
+    transition: background-color 0.6s var(--ease-out-expo);
+  }
+
+  h1, h2, h3, h4, h5 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  ::selection {
+    background: color-mix(in srgb, var(--color-accent) 30%, transparent);
+    color: var(--fg);
+  }
+
+  /* Custom cursor — hide native on capable pointers */
+  @media (hover: hover) and (pointer: fine) {
+    * {
+      cursor: none;
+    }
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  /* Thin scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: color-mix(in srgb, var(--fg) 18%, transparent);
+    border-radius: 999px;
+  }
+}
+
+/* ----------------------------------------------------------------------------
+   Utilities
+---------------------------------------------------------------------------- */
+@layer utilities {
+  .text-muted {
+    color: var(--fg-muted);
+  }
+  .bg-surface {
+    background-color: var(--bg);
+  }
+  .bg-elevated {
+    background-color: var(--bg-elevated);
+  }
+  .border-line {
+    border-color: var(--line);
+  }
+
+  .glass {
+    background: var(--glass);
+    backdrop-filter: blur(16px) saturate(160%);
+    -webkit-backdrop-filter: blur(16px) saturate(160%);
+  }
+
+  .text-gradient {
+    background: linear-gradient(
+      100deg,
+      var(--fg) 0%,
+      var(--color-accent) 55%,
+      var(--color-accent-2) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .text-shimmer {
+    background: linear-gradient(
+      110deg,
+      var(--fg-muted) 30%,
+      var(--fg) 50%,
+      var(--fg-muted) 70%
+    );
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: shimmer 5s linear infinite;
+  }
+
+  .noise {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.04;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .mask-fade-x {
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent,
+      black 12%,
+      black 88%,
+      transparent
+    );
+    mask-image: linear-gradient(
+      to right,
+      transparent,
+      black 12%,
+      black 88%,
+      transparent
+    );
+  }
+}
+
+@keyframes shimmer {
+  to {
+    background-position: -200% 0;
+  }
+}
+
+@keyframes float-blob {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  33% {
+    transform: translate3d(4%, -6%, 0) scale(1.08);
+  }
+  66% {
+    transform: translate3d(-3%, 4%, 0) scale(0.96);
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
