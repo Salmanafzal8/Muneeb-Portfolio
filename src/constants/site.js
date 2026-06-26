@@ -11,6 +11,7 @@ export const SITE = {
 export const NAV_LINKS = [
   { id: "home", label: "Home" },
   { id: "about", label: "About" },
+  { id: "showreel", label: "Showreel" },
   { id: "experience", label: "Experience" },
   { id: "skills", label: "Skills" },
   { id: "languages", label: "Languages" },

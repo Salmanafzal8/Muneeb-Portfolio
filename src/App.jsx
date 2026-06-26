@@ -7,6 +7,7 @@ import Hero from "./sections/Hero";
 
 // Below-the-fold sections are code-split and lazy loaded.
 const About = lazy(() => import("./sections/About"));
+const Showreel = lazy(() => import("./sections/Showreel"));
 const Experience = lazy(() => import("./sections/Experience"));
 const Skills = lazy(() => import("./sections/Skills"));
 const Languages = lazy(() => import("./sections/Languages"));
@@ -23,6 +24,7 @@ export default function App() {
         <Hero />
         <Suspense fallback={<div className="min-h-screen" aria-hidden />}>
           <About />
+          <Showreel />
           <Experience />
           <Skills />
           <Languages />
